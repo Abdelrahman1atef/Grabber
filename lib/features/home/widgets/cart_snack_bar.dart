@@ -17,24 +17,25 @@ class CartSnackBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final totalCount = items.length;
-    return Animate(
-      effects: [SlideEffect()],
-      child:
-          InkWell(
-            onTap: () => Utils.cartIconAction(context),
-            child: Padding(
-              padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
+      child: Animate(
+        effects: [SlideEffect()],
+        child:
+            InkWell(
+              onTap: () => Utils.cartIconAction(context),
               child: Container(
                 height: 70,
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  color: ColorName.primaryColor,
+                color: ColorName.primaryColor.withOpacity(0.95),
                   borderRadius: BorderRadius.circular(7),
+
+
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    // 🔹 show product thumbnails horizontally
                     CartListView(items: items),
                     VerticalDivider(
                       indent: 20,
@@ -97,13 +98,13 @@ class CartSnackBar extends StatelessWidget {
                   ],
                 ),
               ),
-            ),
-          ).animate()
-              .slideY(
-            begin: 1.5,
-            duration: Duration(milliseconds:700),
-            curve: Cubic(.33,.62,.48,1.64)
-          ), // inherits duration from fadeIn
+            ).animate()
+                .slideY(
+              begin: 1.5,
+              duration: Duration(milliseconds:700),
+              curve: Cubic(.33,.62,.48,1.64)
+            ), // inherits duration from fadeIn
+      ),
     );
   }
 }

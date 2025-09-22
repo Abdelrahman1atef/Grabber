@@ -37,8 +37,8 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: SizedBox(
-                  width: 160,
-                  height: 150,
+                  width: 180,
+                  height: 170,
                   child: widget.item.image.image(),
                 ),
               ),
@@ -50,46 +50,61 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
                     child: state.maybeWhen(
                       loaded: (items) {
                         final cartItem = items.firstWhereOrNull(
-                          (e) => e.product == widget.item,
+                              (e) => e.product == widget.item,
                         );
                         bool isItemInCart = cartItem != null;
+
                         return AnimatedContainer(
+                          width: isItemInCart ? 86 : 38,
                           padding: EdgeInsets.symmetric(
                             horizontal: 8,
                             vertical: 8,
                           ),
-                          width: isItemInCart ? 85 : 42,
-                          height: 42,
                           decoration: BoxDecoration(
                             color: ColorName.whiteColor,
                             borderRadius: BorderRadius.circular(25),
                           ),
                           duration: Duration(milliseconds: 400),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              if (isItemInCart)
-                                InkWell(
-                                  onTap: _removeItemFromCart,
-                                  child: SizedBox(
-                                    width: 18,
-                                    height: 18,
-                                    child: cartItem.totalItems > 1
-                                        ? Assets.svgs.remove.svg(width: 24, height: 24)
-                                        : Assets.svgs.trash.svg(width: 24, height: 24),
-                                  ),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            reverse: true,
+                            physics: NeverScrollableScrollPhysics(), // Prevent manual scrolling
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                // Animated visibility for remove button
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 400),
+                                  width: isItemInCart ? 20 : 0,
+                                  child: isItemInCart
+                                      ? InkWell(
+                                    onTap: _removeItemFromCart,
+                                    child: SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: cartItem.totalItems > 1
+                                          ? Assets.svgs.remove.svg(width: 20, height: 20)
+                                          : Assets.svgs.trash.svg(width: 20, height: 20),
+                                    ),
+                                  )
+                                      : SizedBox.shrink(),
                                 ),
-                              if (isItemInCart) const Gap(8),
-                              if (isItemInCart)
-                                Text(cartItem.totalItems.toString()),
-                              if (isItemInCart) const Gap(8),
-                              InkWell(
-                                onTap: _addItemInCart,
-                                child: Assets.svgs.add.svg(width: 24, height: 24),
-                              ),
-                            ],
-                          )
-                          ,
+
+                                Gap(8),
+                                Text(
+                                  cartItem?.totalItems.toString()??"1",
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                Gap(8),
+
+                                // Add button (always visible)
+                                InkWell(
+                                  onTap: _addItemInCart,
+                                  child: Assets.svgs.add.svg(width: 20, height: 20),
+                                ),
+                              ],
+                            ),
+                          ),
                         );
                       },
                       orElse: () => _getCartItemsWidget(),

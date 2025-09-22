@@ -21,27 +21,38 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorName.whiteColor,
-      bottomNavigationBar: BlocBuilder<CartCubit, CartState>(
-        builder: (context, state) {
-          return state.maybeWhen(
-            loaded: (items) => items.isEmpty?SizedBox():CartSnackBar(items: items),
-            orElse: () => SizedBox(),
-          );
-        },
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            BannerWidget(),
-            Gap(20),
-            CategoryWidget(),
-            ItemList(title: "Fruits", items: itemList1),
-            ItemList(title: "Fruits", items: itemList1),
-            ItemList(title: "Fruits", items: itemList1),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                BannerWidget(),
+                Gap(20),
+                CategoryWidget(),
+                ItemList(title: "Fruits", items: itemList1),
+                ItemList(title: "Fruits", items: itemList1),
 
-            // CartWidget()
-          ],
-        ),
+                // CartWidget()
+              ],
+            ),
+          ),
+
+          // Floating cart snackbar
+          Positioned(
+            bottom: 20,
+            left: 0,
+            right: 0,
+            child: BlocBuilder<CartCubit, CartState>(
+              builder: (context, state) {
+                return state.maybeWhen(
+                  loaded: (items) => items.isEmpty ? SizedBox() : CartSnackBar(items: items),
+                  orElse: () => SizedBox(),
+                );
+              },
+            ),
+          ),
+        ],
+
       ),
     );
   }
