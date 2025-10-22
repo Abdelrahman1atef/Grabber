@@ -48,7 +48,8 @@ class ProductModel {
       rate: "4.8",
       residentNumber: "287",
       image: Assets.products.orange,
-    ),ProductModel(
+    ),
+    ProductModel(
       id: 4,
       name: "Lemon",
       qtyOfProduct: 10,
@@ -56,7 +57,8 @@ class ProductModel {
       rate: "4.8",
       residentNumber: "287",
       image: Assets.products.lemon,
-    ),ProductModel(
+    ),
+    ProductModel(
       id: 5,
       name: "Purex",
       qtyOfProduct: 1,
@@ -64,7 +66,8 @@ class ProductModel {
       rate: "4.8",
       residentNumber: "287",
       image: Assets.products.purex,
-    ),ProductModel(
+    ),
+    ProductModel(
       id: 6,
       name: "Lucker",
       qtyOfProduct: 2,

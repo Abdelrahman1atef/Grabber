@@ -6,61 +6,26 @@ import '../../../gen/assets.gen.dart';
 class BannerWidget extends StatelessWidget {
   const BannerWidget({super.key});
 
- static  List  banners = [
+  static List banners = [
     Assets.banners.slider1,
     Assets.banners.slider2,
     Assets.banners.slider3,
-   ];
+  ];
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       itemCount: banners.length,
       itemBuilder: (BuildContext context, int index, int realIndex) {
-        return Image.asset(
-          banners[index].path,
-        );
-
+        return Image.asset(banners[index].path);
       },
       options: CarouselOptions(
         height: 200,
-          aspectRatio: 1,
-          autoPlay: true,
+        aspectRatio: 1,
+        autoPlay: false,
         viewportFraction: 0.7,
-        enlargeCenterPage: true
+        enlargeCenterPage: true,
       ),
-
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

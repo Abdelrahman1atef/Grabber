@@ -25,6 +25,7 @@ dev_dependencies:
   freezed:
   collection:
   flutter_animate:
+  equatable:
 
 flutter:
   generate: true

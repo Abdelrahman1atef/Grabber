@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/common_widgets/custom_card_widget.dart';
-import '../../../core/model/product_model.dart';
-import '../../../core/theme/text_styles.dart';
-import '../../../gen/colors.gen.dart';
+import 'custom_card_widget.dart';
+import '../model/product_model.dart';
+import '../theme/text_styles.dart';
+import '../../gen/colors.gen.dart';
 
-
-
-class ItemList extends StatelessWidget {
-  const ItemList({super.key, required this.items, required this.title});
+class CustomItemList extends StatelessWidget {
+  const CustomItemList({super.key, required this.items, required this.title});
 
   final String title;
   final List items;
@@ -43,9 +41,10 @@ class ItemList extends StatelessWidget {
           child: ListView.builder(
             itemCount: items.length,
             scrollDirection: Axis.horizontal,
+            cacheExtent: 999,
             itemBuilder: (context, index) {
               final ProductModel item = items[index];
-              return CustomCardWidget(item: item);
+              return CustomCardWidget(key: ValueKey(item.id),item: item);
             },
           ),
         ),

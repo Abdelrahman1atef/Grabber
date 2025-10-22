@@ -7,7 +7,7 @@ import 'cart_state.dart';
 class CartCubit extends Cubit<CartState> {
   final List<CartModel> _items = [];
 
-  CartCubit() : super(Initial());
+  CartCubit() : super(const Initial());
 
   // Expose read-only cart
   List<CartModel> get items => List.unmodifiable(_items);
@@ -57,10 +57,13 @@ class CartCubit extends Cubit<CartState> {
     emit(CartState.loaded(List.from(_items)));
   }
 
-
   /// ✅ Completely delete item
   void deleteItem(ProductModel product) {
     _items.removeWhere((e) => e.product == product);
+    emit(CartState.loaded(List.from(_items)));
+  }
+
+  void getCartItems() {
     emit(CartState.loaded(List.from(_items)));
   }
 }

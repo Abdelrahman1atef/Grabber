@@ -17,8 +17,14 @@ class ColorName {
   /// Color: #000000
   static const Color blackColor = Color(0xFF000000);
 
+  /// Color: #898483
+  static const Color darkGrayBackGroundColor = Color(0xFF898483);
+
   /// Color: #F3F3F3
   static const Color grayBackGroundColor = Color(0xFFF3F3F3);
+
+  /// Color: #B5B3B3
+  static const Color grayHintTextColor = Color(0xFFB5B3B3);
 
   /// Color: #5A5555
   static const Color grayTextColor = Color(0xFF5A5555);

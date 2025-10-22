@@ -1,109 +1,134 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:products/features/home/logic/cart_cubit.dart';
 
+import '../../../core/common_widgets/basket_with_badger.dart';
 import '../../../core/model/cart_model.dart';
 import '../../../core/theme/text_styles.dart';
 import '../../../gen/assets.gen.dart';
 import '../../../gen/colors.gen.dart';
-import '../../../utils/utils.dart';
 import 'cart_animated_list.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'cart_preview_bottom_sheet.dart';
 
-class CartSnackBar extends StatelessWidget {
+class CartSnackBar extends StatefulWidget {
   const CartSnackBar({super.key, required this.items});
 
   final List<CartModel> items;
 
   @override
+  State<CartSnackBar> createState() => _CartSnackBarState();
+}
+
+class _CartSnackBarState extends State<CartSnackBar> {
+  bool _toggle = false;
+
+  @override
   Widget build(BuildContext context) {
-    final totalCount = items.length;
-    return Padding(
-      padding: const EdgeInsetsDirectional.symmetric(horizontal: 12),
-      child: Animate(
-        effects: [SlideEffect()],
-        child:
-            InkWell(
-              onTap: () => Utils.cartIconAction(context),
-              child: Container(
-                height: 70,
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                color: ColorName.primaryColor.withOpacity(0.95),
-                  borderRadius: BorderRadius.circular(7),
+    final totalCount = widget.items.length;
+    return AnimatedPositioned(
+      duration: const Duration(milliseconds: 600),
+      curve: const Cubic(.24, 1.06, .44, 1.06),
+      bottom: widget.items.isEmpty?-160:0,
+      left: 0,
+      right: 0,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        height: _toggle ? MediaQuery.of(context).size.height * 0.7 : 70,
+        margin: _toggle
+            ? EdgeInsets.zero
+            : const EdgeInsets.symmetric(horizontal: 12, vertical: 80),
+        decoration: BoxDecoration(
+          color: _toggle
+              ? ColorName.whiteColor
+              : ColorName.primaryColor.withValues(alpha: 0.90),
+          borderRadius: BorderRadius.circular(_toggle ? 16 : 7),
+        ),
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 100),
+          reverseDuration: const Duration(milliseconds: 200),
+          transitionBuilder: (child, animation) =>
+              FadeTransition(opacity: animation, child: child),
 
-
+          child: _toggle
+              ? CartPreviewBottomSheet(
+                  key: const ValueKey("CartPreviewBottomSheet"),
+                  cartCubit: context.read<CartCubit>(),
+                  onClose: () => setState(() => _toggle = false),
+                )
+              : CustomSnackBar(
+                  key: const ValueKey("snackbar"),
+                  items: widget.items,
+                  totalCount: totalCount,
+            onClose: () => setState(() => _toggle = true),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CartListView(items: items),
-                    VerticalDivider(
-                      indent: 20,
-                      endIndent: 20,
-                      color: ColorName.whiteColor,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          "View Basket",
-                          style: TextStyles.normalTextStyle.copyWith(
-                            color: ColorName.whiteColor,
-                          ),
-                        ),
-                        Gap(5),
-                        Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Assets.icons.basket.svg(
-                              colorFilter: ColorFilter.mode(
-                                ColorName.whiteColor,
-                                BlendMode.srcIn,
-                              ),
-                            ),
-                            if (totalCount > 0)
-                              Positioned(
-                                top: -5,
-                                right: -1,
-                                child: TweenAnimationBuilder<double>(
-                                  key: ValueKey(totalCount),
-                                  tween: Tween<double>(begin: 0.7, end: 1.0),
-                                  duration: const Duration(milliseconds: 250),
-                                  curve: Curves.easeOutBack,
-                                  builder: (context, scale, child) {
-                                    return Transform.scale(scale: scale, child: child);
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(4),
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.red,
+        ),
+      ));
+    //       .animate().fadeIn().slideY(
+    //     begin: 1.5,
+    //     duration: const Duration(milliseconds: 700),
+    //     // curve: ConstVal.customCurve,
+    //     curve: const Cubic(.24, 1.06, .44, 1.06),
+    //   ),
+    // );
+  }
+}
 
-                                    ),
-                                    child: Text(
-                                      totalCount.toString(),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  onEnd: () {}, // optional
-                                ),
-                              ),
-                          ],
-                        ),
-                      ],
+class CustomSnackBar extends StatelessWidget {
+  const CustomSnackBar({
+    super.key,
+    required this.totalCount,
+    required this.items, required this.onClose,
+  });
+
+  final List<CartModel> items;
+  final int totalCount;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onClose,
+      child: Container(
+        height: 70,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            CartListView(items: items),
+            const VerticalDivider(
+              indent: 20,
+              endIndent: 20,
+              color: ColorName.whiteColor,
+            ),
+            Row(
+              children: [
+                Text(
+                  "View Basket",
+                  style: TextStyles.normalTextStyle.copyWith(
+                    color: ColorName.whiteColor,
+                  ),
+                ),
+                const Gap(5),
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Assets.icons.basket.svg(
+                      colorFilter: const ColorFilter.mode(
+                        ColorName.whiteColor,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    BasketWithBadger(
+                      key: ValueKey(totalCount),
+                      totalCount: totalCount,
                     ),
                   ],
                 ),
-              ),
-            ).animate()
-                .slideY(
-              begin: 1.5,
-              duration: Duration(milliseconds:700),
-              curve: Cubic(.33,.62,.48,1.64)
-            ), // inherits duration from fadeIn
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

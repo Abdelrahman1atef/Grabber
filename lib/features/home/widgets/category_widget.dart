@@ -16,7 +16,8 @@ class CategoryWidget extends StatelessWidget {
     return CarouselSlider.builder(
       itemCount: category.length,
       itemBuilder: (context, index, realIndex) {
-       final CategoryModel categoryItem = category[realIndex % category.length];
+        final CategoryModel categoryItem =
+            category[realIndex % category.length];
         return Padding(
           padding: const EdgeInsetsDirectional.symmetric(horizontal: 10),
           child: Column(
@@ -24,19 +25,19 @@ class CategoryWidget extends StatelessWidget {
               CircleAvatar(
                 backgroundColor: ColorName.grayBackGroundColor,
                 radius: 35,
-                child:Padding(
+                child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: categoryItem.image.image(),
                 ),
               ),
-              Gap(10),
-              Text(categoryItem.name,style: TextStyles.categoryTextStyle,)
+              const Gap(10),
+              Text(categoryItem.name, style: TextStyles.categoryTextStyle),
             ],
           ),
         );
       },
       options: CarouselOptions(
-        height: 120,
+        height: 130,
         aspectRatio: 1,
         viewportFraction: 0.23,
         autoPlayCurve: Curves.linear,

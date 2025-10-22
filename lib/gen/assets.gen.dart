@@ -131,8 +131,26 @@ class $AssetsSvgsGen {
   /// File path: assets/svgs/add.svg
   SvgGenImage get add => const SvgGenImage('assets/svgs/add.svg');
 
+  /// File path: assets/svgs/apple_pay.svg
+  SvgGenImage get applePay => const SvgGenImage('assets/svgs/apple_pay.svg');
+
+  /// File path: assets/svgs/arrow-right.svg
+  SvgGenImage get arrowRight =>
+      const SvgGenImage('assets/svgs/arrow-right.svg');
+
   /// File path: assets/svgs/arrow_back.svg
   SvgGenImage get arrowBack => const SvgGenImage('assets/svgs/arrow_back.svg');
+
+  /// File path: assets/svgs/card-shield_cvc.svg
+  SvgGenImage get cardShieldCvc =>
+      const SvgGenImage('assets/svgs/card-shield_cvc.svg');
+
+  /// File path: assets/svgs/credit_card.svg
+  SvgGenImage get creditCard =>
+      const SvgGenImage('assets/svgs/credit_card.svg');
+
+  /// File path: assets/svgs/google_pay.svg
+  SvgGenImage get googlePay => const SvgGenImage('assets/svgs/google_pay.svg');
 
   /// File path: assets/svgs/home.svg
   SvgGenImage get home => const SvgGenImage('assets/svgs/home.svg');
@@ -159,7 +177,12 @@ class $AssetsSvgsGen {
   List<SvgGenImage> get values => [
     favourite,
     add,
+    applePay,
+    arrowRight,
     arrowBack,
+    cardShieldCvc,
+    creditCard,
+    googlePay,
     home,
     menu,
     orders,

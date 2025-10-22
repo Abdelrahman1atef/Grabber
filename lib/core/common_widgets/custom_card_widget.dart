@@ -12,16 +12,11 @@ import '../model/cart_model.dart';
 import '../model/product_model.dart';
 import '../theme/text_styles.dart';
 
-class CustomCardWidget extends StatefulWidget {
+class CustomCardWidget extends StatelessWidget {
   const CustomCardWidget({super.key, required this.item});
 
   final ProductModel item;
 
-  @override
-  State<CustomCardWidget> createState() => _CustomCardWidgetState();
-}
-
-class _CustomCardWidgetState extends State<CustomCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,75 +34,58 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
                 child: SizedBox(
                   width: 180,
                   height: 170,
-                  child: widget.item.image.image(),
+                  child: item.image.image(),
                 ),
               ),
-              BlocBuilder<CartCubit, CartState>(
-                builder: (context, state) {
+              // ❌ OLD: Rebuilds ALL 60 items on any cart change
+              // BlocBuilder<CartCubit, CartState>(
+              //   buildWhen: (previous, current) {
+              //     // Only rebuild if this specific item changed
+              //     return previous != current;
+              //   },
+              //   builder: (context, state) {
+              //     return Positioned(
+              //       bottom: 6,
+              //       right: 6,
+              //       child: state.maybeWhen(
+              //         loaded: (items) {
+              //           final CartModel? cartItem = items.firstWhereOrNull(
+              //             (e) => e.product == item,
+              //           );
+              //           bool isItemInCart = cartItem != null;
+              //
+              //           return ItemQuantityWidget(
+              //             item: item,
+              //             cartItem: cartItem,
+              //             isItemInCart: isItemInCart,
+              //           );
+              //         },
+              //         orElse: () => const SizedBox.shrink(),
+              //       ),
+              //     );
+              //   },
+              // ),
+
+              // ✅ NEW: Only rebuilds if THIS specific item's cart data changes
+              BlocSelector<CartCubit, CartState, CartModel?>(
+                selector: (state) {
+                  return state.maybeWhen(
+                    loaded: (items) => items.firstWhereOrNull(
+                      (e) => e.product.id == item.id, // Only track THIS item
+                    ),
+                    orElse: () => null,
+                  );
+                },
+                builder: (context, cartItem) {
+                  bool isItemInCart = cartItem != null;
+
                   return Positioned(
                     bottom: 6,
                     right: 6,
-                    child: state.maybeWhen(
-                      loaded: (items) {
-                        final cartItem = items.firstWhereOrNull(
-                              (e) => e.product == widget.item,
-                        );
-                        bool isItemInCart = cartItem != null;
-
-                        return AnimatedContainer(
-                          width: isItemInCart ? 86 : 38,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: ColorName.whiteColor,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          duration: Duration(milliseconds: 400),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            reverse: true,
-                            physics: NeverScrollableScrollPhysics(), // Prevent manual scrolling
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                // Animated visibility for remove button
-                                AnimatedContainer(
-                                  duration: Duration(milliseconds: 400),
-                                  width: isItemInCart ? 20 : 0,
-                                  child: isItemInCart
-                                      ? InkWell(
-                                    onTap: _removeItemFromCart,
-                                    child: SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: cartItem.totalItems > 1
-                                          ? Assets.svgs.remove.svg(width: 20, height: 20)
-                                          : Assets.svgs.trash.svg(width: 20, height: 20),
-                                    ),
-                                  )
-                                      : SizedBox.shrink(),
-                                ),
-
-                                Gap(8),
-                                Text(
-                                  cartItem?.totalItems.toString()??"1",
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                Gap(8),
-
-                                // Add button (always visible)
-                                InkWell(
-                                  onTap: _addItemInCart,
-                                  child: Assets.svgs.add.svg(width: 20, height: 20),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                      orElse: () => _getCartItemsWidget(),
+                    child: ItemQuantityWidget(
+                      item: item,
+                      cartItem: cartItem,
+                      isItemInCart: isItemInCart,
                     ),
                   );
                 },
@@ -119,7 +97,7 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.item.name, style: TextStyles.normalTextStyle),
+                Text(item.name, style: TextStyles.normalTextStyle),
                 Row(
                   children: [
                     SizedBox(
@@ -127,17 +105,14 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
                       height: 16,
                       child: Assets.icons.star.image(),
                     ),
-                    Gap(8),
+                    const Gap(8),
                     Text(
-                      widget.item.rateWithResidentNum,
+                      item.rateWithResidentNum,
                       style: TextStyles.normalTextStyle.copyWith(fontSize: 14),
                     ),
                   ],
                 ),
-                Text(
-                  "\$${widget.item.price}",
-                  style: TextStyles.normalTextStyle,
-                ),
+                Text("\$${item.price}", style: TextStyles.normalTextStyle),
               ],
             ),
           ),
@@ -145,44 +120,83 @@ class _CustomCardWidgetState extends State<CustomCardWidget> {
       ),
     );
   }
+}
 
-  Widget _isItemInCartWidget(CartModel cartItem) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        InkWell(
-          onTap: () => _removeItemFromCart(),
-          child: SizedBox(
-            width: 18,
-            height: 18,
-            child: cartItem.totalItems > 1
-                ? Assets.svgs.remove.svg(width: 24, height: 24)
-                : Assets.svgs.trash.svg(width: 24, height: 24),
-          ),
+class ItemQuantityWidget extends StatelessWidget {
+  const ItemQuantityWidget({
+    super.key,
+    required this.cartItem,
+    required this.isItemInCart,
+    required this.item,
+  });
+
+  final ProductModel item;
+  final CartModel? cartItem;
+
+  final bool isItemInCart;
+
+  double get _borderRadius => 25;
+
+  double? get _iconSize => 22;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      height: 40,
+      width: isItemInCart ? 90 : 40,
+      decoration: BoxDecoration(
+        color: ColorName.whiteColor.withValues(alpha: 0.8),
+        borderRadius: BorderRadius.circular(_borderRadius),
+      ),
+      duration: const Duration(milliseconds: 300),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        reverse: true,
+        physics: const NeverScrollableScrollPhysics(),
+        // Prevent manual scrolling
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            if (isItemInCart) ...<Widget>[
+              // Animated visibility for remove button
+              InkWell(
+                borderRadius: BorderRadius.circular(_borderRadius),
+                onTap: () => context.read<CartCubit>().removeItem(item, 1),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 8,
+                  ),
+                  child: (cartItem?.totalItems ?? 0) > 1
+                      ? Assets.svgs.remove.svg(
+                          width: _iconSize,
+                          height: _iconSize,
+                        )
+                      : Assets.svgs.trash.svg(
+                          width: _iconSize,
+                          height: _iconSize,
+                        ),
+                ),
+              ),
+              const Gap(3),
+              Text(
+                cartItem?.totalItems.toString() ?? "1",
+                style: const TextStyle(fontSize: 14),
+              ),
+              const Gap(3),
+            ],
+            // Add button (always visible)
+            InkWell(
+              borderRadius: BorderRadius.circular(_borderRadius),
+              onTap: () => context.read<CartCubit>().addItem(item, 1),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                child: Assets.svgs.add.svg(width: _iconSize, height: _iconSize),
+              ),
+            ),
+          ],
         ),
-        const Gap(8),
-        Text(cartItem.totalItems.toString()), // ✅ use cartItem count
-        const Gap(8),
-        InkWell(
-          onTap: () => _addItemInCart(),
-          child: Assets.svgs.add.svg(width: 24, height: 24), // ✅ add, not remove
-        ),
-      ],
+      ),
     );
-  }
-
-  Widget _getCartItemsWidget() {
-    return InkWell(
-      onTap: () => _addItemInCart(),
-      child: Assets.svgs.add.svg(width: 24, height: 24),
-    );
-  }
-
-  void _addItemInCart() {
-    context.read<CartCubit>().addItem(widget.item, 1);
-  }
-
-  void _removeItemFromCart() {
-    context.read<CartCubit>().removeItem(widget.item, 1);
   }
 }

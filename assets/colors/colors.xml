@@ -5,5 +5,7 @@
     <color name="primaryColor">#0CA201</color>
     <color name="grayBackGroundColor">#F3F3F3</color>
     <color name="grayTextColor">#5A5555</color>
+    <color name="grayHintTextColor">#B5B3B3</color>
+    <color name="darkGrayBackGroundColor">#898483</color>
 
 </resources>

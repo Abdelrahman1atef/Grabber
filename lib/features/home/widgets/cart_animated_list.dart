@@ -40,10 +40,16 @@ class _CartListViewState extends State<CartListView> {
                   final removedIndex = prevItems - 1;
                   final removedItem = widget.items[removedIndex];
                   _listKey.currentState?.removeItem(
+                    duration: const Duration(milliseconds: 500),
                     removedIndex,
-                    (context, animation) => FadeTransition(
-                      opacity: animation,
-                      child: _buildItem(removedItem, context),
+                    (context, animation) => SlideTransition(
+                      position: animation.drive(
+                        Tween(begin: const Offset(0, -1), end: const Offset(0, 0)),
+                      ),
+                      child: FadeTransition(
+                        opacity: animation,
+                        child: _buildItem(removedItem, context),
+                      ),
                     ),
                   );
                 }
@@ -73,9 +79,7 @@ class _CartListViewState extends State<CartListView> {
           CircleAvatar(
             radius: 25,
             backgroundColor: ColorName.whiteColor,
-            child: Hero(
-              tag: "_${cart.product.id}",
-                child: cart.product.image.image(height: 38)),
+            child: cart.product.image.image(height: 38),
           ),
 
           // ✅ Quantity badge with animation
@@ -121,11 +125,11 @@ class _CartListViewState extends State<CartListView> {
     return index == 0
         ? _buildItem(cart, context)
         : Animate(
-            effects: [FadeEffect(), SlideEffect()],
+            effects: const [FadeEffect(), SlideEffect()],
             child: _buildItem(
               cart,
               context,
-            ).animate().slide(begin: Offset(2, 0.5), end: Offset(0, 0)),
+            ).animate().slide(begin: const Offset(2, 0.5), end: const Offset(0, 0)),
           );
   }
 }

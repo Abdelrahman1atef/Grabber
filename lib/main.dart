@@ -7,13 +7,13 @@ import 'features/home/logic/cart_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized(); // Add this line
-  SystemChrome.setPreferredOrientations([ // Add these lines
+  SystemChrome.setPreferredOrientations([
+    // Add these lines
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((_) {
     runApp(const FruitApp());
   });
-  runApp(const FruitApp());
 }
 
 class FruitApp extends StatelessWidget {
@@ -23,7 +23,7 @@ class FruitApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CartCubit(),
-      child: MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: AppRoutes.onGenerateRoutes,
         // Filled in based on recent files
