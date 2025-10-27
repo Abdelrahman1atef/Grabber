@@ -22,16 +22,16 @@
 
 ### 🏠 Home Screen
 <!-- Add your home screen screenshot here -->
-<img src="screenshots/home_screen.png" alt="Home Screen" width="200" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+<img src="screenshots/[home_screen.png](https://github.com/user-attachments/assets/b7818d7b-a8e5-4bff-aa64-0b68b0d2cf1f)" alt="Home Screen" width="200" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
 ### 🛒 Shopping Cart
 <!-- Add your cart screen screenshot here -->
-<img src="screenshots/cart_screen.png" alt="Cart Screen" width="200" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+<img src="screenshots/[cart_screen.png](https://github.com/user-attachments/assets/8bf211f2-b2b5-4dc8-af66-0ce1329d086d)" alt="Cart Screen" width="200" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
 ### 💳 Checkout & Payment
 <!-- Add your checkout/payment screenshots here -->
-<img src="screenshots/checkout_screen.png" alt="Checkout Screen" width="200" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-<img src="screenshots/payment_screen.png" alt="Payment Screen" width="200" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+<img src="screenshots/checkout_screen.png" alt="[Checkout Screen](https://github.com/user-attachments/assets/0a43a1e6-042e-4021-8be5-7ba0d1583f08)" width="200" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+<img src="[screenshots/payment_screen.png](https://github.com/user-attachments/assets/d2a44976-da03-4838-85c4-fceeb389f9ae)" alt="Payment Screen" width="200" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
 ### 🗺️ Order Tracking
 <!-- Add your order tracking/map screenshots here -->
