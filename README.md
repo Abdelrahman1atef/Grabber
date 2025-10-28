@@ -9,8 +9,8 @@
 
 *A modern, beautiful grocery delivery app built with Flutter*
 
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/freshfruits?style=social)](https://github.com/yourusername/freshfruits)
-[![GitHub forks](https://img.shields.io/github/forks/yourusername/freshfruits?style=social)](https://github.com/yourusername/freshfruits)
+[![GitHub stars](https://img.shields.io/github/stars/Abdelrahman1atef/freshfruits?style=social)](https://github.com/Abdelrahman1atef/freshfruits)
+[![GitHub forks](https://img.shields.io/github/forks/Abdelrahman1atef/freshfruits?style=social)](https://github.com/Abdelrahman1atef/freshfruits)
 
 </div>
 
@@ -96,7 +96,7 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/freshfruits.git
+   git clone https://github.com/Abdelrahman1atef/freshfruits.git
    cd freshfruits
    ```
 
@@ -270,13 +270,24 @@ flutter test --coverage
 
 ## 🤝 Contributing
 
-We welcome contributions! Please follow these steps:
+We welcome contributions! To get started:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Fork the repository: [https://github.com/Abdelrahman1atef/Grabber.git](https://github.com/Abdelrahman1atef/Grabber.git)
+2. Create your feature branch:  
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Commit your changes:  
+   ```bash
+   git commit -m "Describe your feature"
+   ```
+4. Push to your branch:  
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. Open a Pull Request on GitHub against the main repository.
+
+Thank you for contributing!
 
 ### **Development Guidelines**
 - Follow Flutter/Dart style guidelines
@@ -294,10 +305,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/yourprofile)
-- Email: your.email@example.com
+**Abdelrahman Atef**
+- GitHub: [@Abdelrahman1atef](https://github.com/Abdelrahman1atef)
+- LinkedIn: [Abdelrahman Atef](https://www.linkedin.com/in/abdelrahman-atef-b1a59b24a/)
+- University: Mansura University
+- Email: abdelrahman.atef@example.com
+
+**About the Developer:**
+Passionate mobile developer specializing in Android and Flutter development. Currently studying at Mansura University and building innovative mobile applications with clean architecture principles. Experienced in Java, Kotlin, Flutter, and Firebase integration.
 
 ---
 
