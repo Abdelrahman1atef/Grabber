@@ -46,37 +46,37 @@ class _CustomKeyboardTextFieldState extends State<CustomKeyboardTextField> {
             ),
             itemBuilder: (context, index) {
               return keys[index] != "+*#"
-                  ? InkWell(
-                      splashColor: ColorName.grayBackGroundColor,
-                      hoverColor: ColorName.grayBackGroundColor,
-                      focusColor: ColorName.grayBackGroundColor,
-                      highlightColor: ColorName.grayBackGroundColor,
-                      onTap: () {
-                        context.read<CustomKeyboardCubit>().postTextInput(
-                          keys[index],
-                        );
-                      },
-                      child: Container(
-                        padding: const EdgeInsetsDirectional.symmetric(
-                          horizontal: 10,
-                          vertical: 5,
+                  ? Padding(
+                padding: const EdgeInsetsDirectional.symmetric(
+                  horizontal: 5,
+                  vertical: 5,
+                ),
+                    child: MaterialButton(
+                        color: ColorName.whiteColor,
+                        shape: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide.none,
                         ),
-                        margin: const EdgeInsetsGeometry.all(5),
-                        decoration: BoxDecoration(
-                          color: ColorName.whiteColor,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                        disabledElevation: 0,
+                        elevation: 0,
+                        highlightElevation: 0,
+                        animationDuration: const Duration(microseconds: 50),
+                        onPressed: () {
+                          context.read<CustomKeyboardCubit>().postTextInput(
+                            keys[index],
+                          );
+                        },
                         child: Center(
                           child: Text(
                             (keys[index]),
                             style: TextStyles.normalTextStyle.copyWith(
                               fontSize: 25,
-                              fontWeight: FontWeight.normal,
+                              fontWeight: index==9||index==11?FontWeight.normal:FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
-                    )
+                  )
                   : Center(
                       child: Text(
                         (keys[index]),

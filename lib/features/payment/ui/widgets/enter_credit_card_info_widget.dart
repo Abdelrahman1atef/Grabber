@@ -68,6 +68,7 @@ class EnterCreditCardInfoWidget extends StatelessWidget {
                       hintText: "***",
                       controller: cubit.state.cvvController,
                       focusNode: cubit.state.cvvFocus,
+                      haveSuffixIcon: true,
                       title: 'CVC',
                       autofocus: false,
                     ),

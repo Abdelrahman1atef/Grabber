@@ -54,7 +54,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       ),
                       const Gap(10),
 
-                      /// TODO add action icon for location
                       const Icon(
                         Icons.keyboard_arrow_down,
                         color: Colors.black,

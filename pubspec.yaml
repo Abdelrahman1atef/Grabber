@@ -26,7 +26,13 @@ dev_dependencies:
   collection:
   flutter_animate:
   equatable:
-
+  google_maps_flutter:
+  http:
+  polyline_codec:  # To decode Google's polyline
+  flutter_polyline_points:
+  location:
+  intl:
+  shimmer:
 flutter:
   generate: true
   uses-material-design: true
@@ -37,6 +43,9 @@ flutter:
     - assets/icons/
     - assets/logo/
     - assets/svgs/
+    - assets/maps/
+    - assets/markers/
+    - assets/order_state/
 
   fonts:
     - family: Inter

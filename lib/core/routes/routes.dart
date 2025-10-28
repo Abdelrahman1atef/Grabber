@@ -4,4 +4,6 @@ class Routes {
   static const cart = "/cart_screen";
   static const checkout = "/checkout_screen";
   static const payment = "/payment_screen";
+  static const orderMap = "/order_map_screen";
+
 }

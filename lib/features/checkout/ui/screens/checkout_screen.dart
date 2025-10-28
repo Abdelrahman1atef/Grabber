@@ -38,6 +38,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       icon: Assets.svgs.creditCard.svg(),
     ),
   ];
+  late double total;
+  double ceilTo2Decimals(double value) {
+    return (value * 100).ceilToDouble() / 100;
+  }
   late final PaymentMethodModel _selectedPaymentMethod = paymentMethods[0];
   @override
   Widget build(BuildContext context) {
@@ -154,11 +158,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           return remaining == 0 ? 0.0 : delivery;
                         }
 
-                        double ceilTo2Decimals(double value) {
-                          return (value * 100).ceilToDouble() / 100;
-                        }
 
-                        final total =
+
+                         total =
                             ceilTo2Decimals(itemsTotalPrice) +
                             bagFee +
                             serviceFee +
@@ -213,7 +215,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     Navigator.pushNamed(
                       context,
                       Routes.payment,
-                      arguments: paymentMethods,
+                      arguments: [paymentMethods,ceilTo2Decimals(total)],
                     );
                   },
                   items: [
@@ -224,7 +226,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ],
                 ),
 
-                const Gap(300),
+                const Gap(150),
               ],
             ),
           ),

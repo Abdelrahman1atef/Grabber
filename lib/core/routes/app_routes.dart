@@ -4,6 +4,7 @@ import 'package:products/core/routes/routes.dart';
 import '../../features/cart/screens/cart_screen.dart';
 import '../../features/checkout/ui/screens/checkout_screen.dart';
 import '../../features/main/screens/main_screen.dart';
+import '../../features/order_map/ui/screens/order_map_screen.dart';
 import '../../features/payment/ui/screens/payment_screen.dart';
 import '../../features/splash/splash_screen.dart';
 import '../../utils/const_val.dart';
@@ -56,7 +57,7 @@ class AppRoutes<Routs> {
       case Routes.checkout:
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const CheckoutScreen(),
+          const CheckoutScreen(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SlideTransition(
               position: animation.drive(
@@ -72,10 +73,15 @@ class AppRoutes<Routs> {
         );
       case Routes.payment:
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              PaymentScreen(
-                paymentMethods: settings.arguments as List<PaymentMethodModel>,
-              ),
+          pageBuilder: (context, animation, secondaryAnimation) {
+            final args = settings.arguments as List<dynamic>;
+            final paymentMethods = args[0] as List<PaymentMethodModel>;
+            final total = args[1] as double;
+            return PaymentScreen(
+              paymentMethods: paymentMethods,
+              total: total,
+            );
+          },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SlideTransition(
               position: animation.drive(
@@ -89,7 +95,23 @@ class AppRoutes<Routs> {
           },
           transitionDuration: const Duration(milliseconds: 400),
         );
-
+      case Routes.orderMap:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+          const OrderMapScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return SlideTransition(
+              position: animation.drive(
+                Tween(
+                  begin: const Offset(1.7, 0.0),
+                  end: const Offset(0.0, 0.0),
+                ),
+              ),
+              child: child,
+            );
+          },
+          transitionDuration: const Duration(milliseconds: 400),
+        );
       default:
         return _undefineRoute();
     }
