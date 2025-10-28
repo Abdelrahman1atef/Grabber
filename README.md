@@ -37,15 +37,6 @@
 <!-- Add your order tracking/map screenshots here -->
 <img src="screenshots/order_tracking.png" alt="Order Tracking" width="200" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
-### 🎨 App Screenshots Gallery
-<!-- Add more screenshots here as needed -->
-<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 20px 0;">
-  <img src="screenshots/splash_screen.png" alt="Splash Screen" width="150" style="border-radius: 15px;">
-  <img src="screenshots/product_details.png" alt="Product Details" width="150" style="border-radius: 15px;">
-  <img src="screenshots/categories.png" alt="Categories" width="150" style="border-radius: 15px;">
-  <img src="screenshots/profile.png" alt="Profile" width="150" style="border-radius: 15px;">
-</div>
-
 </div>
 
 ---
@@ -96,8 +87,8 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Abdelrahman1atef/freshfruits.git
-   cd freshfruits
+   git clone https://github.com/Abdelrahman1atef/Grabber.git
+   cd Grabber
    ```
 
 2. **Install dependencies**
